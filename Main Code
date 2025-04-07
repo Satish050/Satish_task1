@@ -1,1 +1,68 @@
+# Here importing the data set from kaggle hub
+# Here using libraries like numpy and pandas
+import numpy as np
+import pandas as pd
 
+path = ("C:/Users/satish/Downloads/archive/marketing_campaign.csv")
+
+df = pd.read_csv(path)
+
+print(df[:])
+
+# 1. Perview of data set
+df.info()
+df.head()
+df.tail()
+df.info()
+df.describe(include="all")
+
+# 2 Check Missing Values
+
+df.isnull().sum()
+
+# Drop Columns with too many missing values(if any)
+# df.drop(columns=["column_name"], inpplace=True)
+# Or fill missing values
+
+df.fillna({"Income":df["Income"].mean()}, inplace=True)
+
+df.isnull().sum()
+
+# There is no null values here
+
+# 3 Convert data types of Dt_Customer
+
+df["Dt_Customer"] = pd.to_datetime(df["Dt_Customer"],format="%Y-%m-%d")
+print(df["Dt_Customer"])
+
+# Here checking the NaT Means not a Not a Time
+df["Dt_Customer"].isna().sum()
+
+# Here dropped the NaT
+df=df.dropna(subset=["Dt_Customer"])
+
+# Here filled the date with default date
+df["Dt_Customer"] = df["Dt_Customer"].fillna(pd.Timestamp("2000-01-01"))
+
+# Here filled the date
+df["Dt_Customer"] = df["Dt_Customer"].fillna(pd.Timestamp("2000-01-01"))
+
+# Here renaming the columns
+df.columns = df.columns.str.strip().str.lower().str.replace(",", "_")
+
+# Here fixing the data types of columns
+
+df["income"] = df["income"].astype(float)
+df["year_birth"] = df["year_birth"].astype(int)
+
+# Create new features 
+
+df["Childern"] = df["kidhome"] + df["teenhome"]
+
+df.dtypes
+
+# Save the cleaned dataset 
+
+df.to_csv("Downloads/Cleaned_Customer_Personality.csv", index=False)
+
+print("\n Data Cleaning Complete. Cleaned File saved as 'Cleaned_Customer_Personality.csv'")
