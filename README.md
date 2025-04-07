@@ -23,6 +23,7 @@ This project involves cleaning the Customer Personality Analysis dataset from Ka
 ## Tools Used
 - Python
 - Pandas
+- Numpy
 
 ## IDE Used
 - Juptyer Note Book
